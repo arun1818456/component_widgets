@@ -1,0 +1,84 @@
+
+import 'package:flutter/material.dart';
+
+class CustomToggleButton extends StatefulWidget {
+   const CustomToggleButton({
+    super.key,
+    this.initialValue = false,
+    this.onChanged,
+    this.enableColor, this.onTap,
+  });
+
+  final bool initialValue;
+  final ValueChanged<bool>? onChanged;
+ final  GestureTapCallback? onTap;
+  final Color? enableColor;
+
+  @override
+  State<CustomToggleButton> createState() => _CustomToggleButtonState();
+}
+
+class _CustomToggleButtonState extends State<CustomToggleButton> {
+  late bool value;
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.initialValue;
+  }
+
+  void toggleValue() {
+    setState(() {
+      value = !value;
+    });
+    if (widget.onChanged != null) {
+      widget.onChanged!(value);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap:widget.onTap?? toggleValue,
+      child: Container(
+        height: 30,
+        width: 30,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                height: 10,
+                width: 38,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: value
+                        ? widget.enableColor ?? Colors.black
+                        : Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+            ),
+            AnimatedAlign(
+              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+              duration: const Duration(milliseconds: 200),
+              child: Container(
+                height: 18,
+                width: 18,
+                decoration: BoxDecoration(
+                  color: value
+                      ? widget.enableColor ?? Colors.black
+                      : Colors.grey,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
