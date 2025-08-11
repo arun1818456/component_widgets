@@ -1,0 +1,137 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
+
+///DUMMY IMAGE URL:---   imageUrl: "https://dummyimage.com/50x50/cccccc/000000&text=Arun",
+///DUMMY IMAGE URL:---   imageUrl: "https://randomuser.me/api/portraits/women/32.jpg",
+
+class NetworkImageWidget extends StatelessWidget {
+  final String imageUrl;
+  final double width;
+  final double height;
+  final double borderRadius;
+  final double iconSize;
+  final BoxFit boxFit;
+  final Widget? placeholderWidget;
+  final Widget? errorWidget;
+  final Widget? emptyWidget;
+  final IconData? emptyIcon;
+  final VoidCallback? onTap;
+
+  const NetworkImageWidget({
+    super.key,
+    required this.imageUrl,
+    this.width = 40,
+    this.height = 40,
+    this.borderRadius = 18,
+    this.iconSize = 25,
+    this.boxFit = BoxFit.cover,
+    this.placeholderWidget,
+    this.errorWidget,
+    this.emptyWidget,
+    this.emptyIcon,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget content = imageUrl.isEmpty
+        ? _buildEmptyProfileWidget()
+        : CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: width,
+      height: height,
+      fit: boxFit,
+      placeholder: (context, url) => _buildPlaceholder(),
+      errorWidget: (context, url, error) => _buildErrorWidget(),
+    );
+
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: Semantics(
+          label: 'Network image',
+          child: content,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlaceholder() {
+    return placeholderWidget ??
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: const Center(child: CircularProgressIndicator()),
+        );
+  }
+
+  Widget _buildErrorWidget() {
+    return errorWidget ??
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: Icon(
+            Icons.error_outline,
+            size: iconSize,
+            color: Colors.white,
+          ),
+        );
+  }
+
+  Widget _buildEmptyProfileWidget() {
+    return emptyWidget ??
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: Icon(
+            emptyIcon ??
+                const IconData(
+                  0xe94e,
+                  fontFamily: 'MaterialIcons',
+                ),
+            color: Colors.grey,
+            size: iconSize,
+          ),
+        );
+  }
+}
+
+
+
+//https://www.kasandbox.org/programming-images/avatars/spunky-sam.png
+// https://www.kasandbox.org/programming-images/avatars/spunky-sam-green.png
+// https://www.kasandbox.org/programming-images/avatars/purple-pi.png
+// https://www.kasandbox.org/programming-images/avatars/purple-pi-teal.png
+// https://www.kasandbox.org/programming-images/avatars/purple-pi-pink.png
+// https://www.kasandbox.org/programming-images/avatars/primosaur-ultimate.png
+// https://www.kasandbox.org/programming-images/avatars/primosaur-tree.png
+// https://www.kasandbox.org/programming-images/avatars/primosaur-sapling.png
+// https://www.kasandbox.org/programming-images/avatars/orange-juice-squid.png
+// https://www.kasandbox.org/programming-images/avatars/old-spice-man.png
+// https://www.kasandbox.org/programming-images/avatars/old-spice-man-blue.png
+// https://www.kasandbox.org/programming-images/avatars/mr-pants.png
+// https://www.kasandbox.org/programming-images/avatars/mr-pants-purple.png
+// https://www.kasandbox.org/programming-images/avatars/mr-pants-green.png
+// https://www.kasandbox.org/programming-images/avatars/marcimus.png
+// https://www.kasandbox.org/programming-images/avatars/marcimus-red.png
+// https://www.kasandbox.org/programming-images/avatars/marcimus-purple.png
+// https://www.kasandbox.org/programming-images/avatars/marcimus-orange.png
+// https://www.kasandbox.org/programming-images/avatars/duskpin-ultimate.png
+// https://www.kasandbox.org/programming-images/avatars/duskpin-tree.png
+// https://www.kasandbox.org/programming-images/avatars/duskpin-seedling.png
+// https://www.kasandbox.org/programming-images/avatars/duskpin-seed.png
+// https://www.kasandbox.org/programming-images/avatars/duskpin-sapling.png
