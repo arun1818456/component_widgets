@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-
+// dummy image url automatic change images "https://i.pravatar.cc/300"
 ///DUMMY IMAGE URL:---   imageUrl: "https://dummyimage.com/50x50/cccccc/000000&text=Arun",
 ///DUMMY IMAGE URL:---   imageUrl: "https://randomuser.me/api/portraits/women/32.jpg",
 
